@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react'
 import { fetchRecords } from '../api.js'
 
+const leaderboardApiUrl = import.meta.env.VITE_CODESPACE_NAME?.trim()
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard/`
+  : 'http://localhost:8000/api/leaderboard/'
+
 function Leaderboard() {
   const [entries, setEntries] = useState([])
   const [status, setStatus] = useState('loading')
   const [error, setError] = useState('')
 
   useEffect(() => {
-    fetchRecords('leaderboard').then(setEntries).then(() => setStatus('ready')).catch((loadError) => { setError(loadError.message); setStatus('error') })
+    fetchRecords(leaderboardApiUrl).then(setEntries).then(() => setStatus('ready')).catch((loadError) => { setError(loadError.message); setStatus('error') })
   }, [])
 
   if (status === 'loading') return <p className="state-message">Loading leaderboard...</p>

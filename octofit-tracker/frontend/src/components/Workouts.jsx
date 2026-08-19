@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react'
 import { fetchRecords } from '../api.js'
 
+const workoutsApiUrl = import.meta.env.VITE_CODESPACE_NAME?.trim()
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/workouts/`
+  : 'http://localhost:8000/api/workouts/'
+
 function Workouts() {
   const [workouts, setWorkouts] = useState([])
   const [status, setStatus] = useState('loading')
   const [error, setError] = useState('')
 
   useEffect(() => {
-    fetchRecords('workouts').then(setWorkouts).then(() => setStatus('ready')).catch((loadError) => { setError(loadError.message); setStatus('error') })
+    fetchRecords(workoutsApiUrl).then(setWorkouts).then(() => setStatus('ready')).catch((loadError) => { setError(loadError.message); setStatus('error') })
   }, [])
 
   if (status === 'loading') return <p className="state-message">Loading workouts...</p>

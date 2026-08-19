@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react'
 import { fetchRecords, formatDate } from '../api.js'
 
+const activitiesApiUrl = import.meta.env.VITE_CODESPACE_NAME?.trim()
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/activities/`
+  : 'http://localhost:8000/api/activities/'
+
 function Activities() {
   const [activities, setActivities] = useState([])
   const [status, setStatus] = useState('loading')
   const [error, setError] = useState('')
 
   useEffect(() => {
-    fetchRecords('activities')
+    fetchRecords(activitiesApiUrl)
       .then((records) => {
         setActivities(records)
         setStatus('ready')

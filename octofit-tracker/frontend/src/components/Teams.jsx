@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react'
 import { fetchRecords } from '../api.js'
 
+const teamsApiUrl = import.meta.env.VITE_CODESPACE_NAME?.trim()
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/teams/`
+  : 'http://localhost:8000/api/teams/'
+
 function Teams() {
   const [teams, setTeams] = useState([])
   const [status, setStatus] = useState('loading')
   const [error, setError] = useState('')
 
   useEffect(() => {
-    fetchRecords('teams').then(setTeams).then(() => setStatus('ready')).catch((loadError) => { setError(loadError.message); setStatus('error') })
+    fetchRecords(teamsApiUrl).then(setTeams).then(() => setStatus('ready')).catch((loadError) => { setError(loadError.message); setStatus('error') })
   }, [])
 
   if (status === 'loading') return <p className="state-message">Loading teams...</p>
