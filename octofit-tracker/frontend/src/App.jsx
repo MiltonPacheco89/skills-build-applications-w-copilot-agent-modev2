@@ -1,122 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { NavLink, Route, Routes, Link } from 'react-router-dom'
 import './App.css'
+import Activities from './components/Activities.jsx'
+import Leaderboard from './components/Leaderboard.jsx'
+import Teams from './components/Teams.jsx'
+import Users from './components/Users.jsx'
+import Workouts from './components/Workouts.jsx'
+
+const navItems = [
+  { label: 'Overview', to: '/' },
+  { label: 'Activities', to: '/activities' },
+  { label: 'Leaderboard', to: '/leaderboard' },
+  { label: 'Teams', to: '/teams' },
+  { label: 'Athletes', to: '/users' },
+  { label: 'Workouts', to: '/workouts' },
+]
+
+function Overview() {
+  return (
+    <section className="overview resource-page">
+      <div className="page-heading"><p className="eyebrow">Wednesday, August 19</p><h1>Make today count.</h1><p>Your team is already in motion. Keep the streak going.</p></div>
+      <div className="overview-grid"><Link className="overview-card overview-card-primary" to="/activities"><span className="card-kicker">This week</span><strong>Log an activity</strong><span>Turn movement into momentum <span aria-hidden="true">-&gt;</span></span></Link><Link className="overview-card" to="/leaderboard"><span className="card-kicker">Competition</span><strong>See the leaderboard</strong><span>Find your place in the pack <span aria-hidden="true">-&gt;</span></span></Link><Link className="overview-card" to="/workouts"><span className="card-kicker">For you</span><strong>Choose a workout</strong><span>There is always a next set <span aria-hidden="true">-&gt;</span></span></Link></div>
+      <div className="overview-note"><span className="status-dot" /> OctoFit is ready for your next win.</div>
+    </section>
+  )
+}
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+  return <div className="app-shell"><header className="app-header"><Link className="brand" to="/"><span className="brand-mark">O</span><span>OctoFit<span className="brand-accent">/</span>Tracker</span></Link><nav aria-label="Primary navigation">{navItems.map((item) => <NavLink key={item.to} to={item.to} end={item.to === '/'}>{item.label}</NavLink>)}</nav></header><main><Routes><Route path="/" element={<Overview />} /><Route path="/activities" element={<Activities />} /><Route path="/leaderboard" element={<Leaderboard />} /><Route path="/teams" element={<Teams />} /><Route path="/users" element={<Users />} /><Route path="/workouts" element={<Workouts />} /></Routes></main><footer>OCTOFIT TRACKER <span>Build your best day, one activity at a time.</span></footer></div>
 }
 
 export default App
